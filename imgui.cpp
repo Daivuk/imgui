@@ -10463,6 +10463,17 @@ static ImVec2 InputTextCalcTextSizeW(const ImWchar* text_begin, const ImWchar* t
     while (s < text_end)
     {
         unsigned int c = (unsigned int)(*s++);
+        if (c == '^')
+        {
+            if (text_end - s > 0)
+            {
+                if (*s >= '1' && *s <= '9')
+                {
+                    s++;
+                    continue;
+                }
+            }
+        }
         if (c == '\n')
         {
             text_size.x = ImMax(text_size.x, line_width);

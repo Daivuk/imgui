@@ -2557,6 +2557,17 @@ ImVec2 ImFont::CalcTextSizeA(float size, float max_width, float wrap_width, cons
         if (c < 0x80)
         {
             s += 1;
+            if (c == '^')
+            {
+                if (text_end - s > 0)
+                {
+                    if (*s >= '1' && *s <= '9')
+                    {
+                        s += 1;
+                        continue;
+                    }
+                }
+            }
         }
         else
         {
@@ -2669,6 +2680,8 @@ void ImFont::RenderText(ImDrawList* draw_list, float size, ImVec2 pos, ImU32 col
     ImDrawIdx* idx_write = draw_list->_IdxWritePtr;
     unsigned int vtx_current_idx = draw_list->_VtxCurrentIdx;
 
+    float alpha = (float)(col >> 24 & 0xFF) / 255.0f;
+
     while (s < text_end)
     {
         if (word_wrap_enabled)
@@ -2702,6 +2715,53 @@ void ImFont::RenderText(ImDrawList* draw_list, float size, ImVec2 pos, ImU32 col
         if (c < 0x80)
         {
             s += 1;
+            if (c == '^')
+            {
+                if (text_end - s > 0)
+                {
+                    switch (*s)
+                    {
+                    case '1':
+                        col = ImColor(0.25f, 0.25f, 1.0f, alpha);
+                        s += 1;
+                        continue;
+                    case '2':
+                        col = ImColor(0.25f, 1.0f, 0.25f, alpha);
+                        s += 1;
+                        continue;
+                    case '3':
+                        col = ImColor(0.25f, 1.0f, 1.0f, alpha);
+                        s += 1;
+                        continue;
+                    case '4':
+                        col = ImColor(1.0f, 0.25f, 0.25f, alpha);
+                        s += 1;
+                        continue;
+                    case '5':
+                        col = ImColor(1.0f, 0.25f, 1.0f, alpha);
+                        s += 1;
+                        continue;
+                    case '6':
+                        col = ImColor(1.0f, 0.7f, 0.0f, alpha);
+                        s += 1;
+                        continue;
+                    case '7':
+                        col = ImColor(0.5f, 0.5f, 0.5f, alpha);
+                        s += 1;
+                        continue;
+                    case '8':
+                        col = ImColor(1.0f, 1.0f, 1.0f, alpha);
+                        s += 1;
+                        continue;
+                    case '9':
+                        col = ImColor(1.0f, 1.0f, 0.0f, alpha);
+                        s += 1;
+                        continue;
+                    default:
+                        break;
+                    }
+                }
+            }
         }
         else
         {
