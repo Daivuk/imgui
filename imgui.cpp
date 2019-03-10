@@ -10689,7 +10689,7 @@ static bool InputTextFilterCharacter(unsigned int* p_char, ImGuiInputTextFlags f
     if (c >= 0xE000 && c <= 0xF8FF) // Filter private Unicode range. I don't imagine anybody would want to input them. GLFW on OSX seems to send private characters for special keys like arrow keys.
         return false;
 
-    if (flags & (ImGuiInputTextFlags_CharsDecimal | ImGuiInputTextFlags_CharsHexadecimal | ImGuiInputTextFlags_CharsUppercase | ImGuiInputTextFlags_CharsNoBlank | ImGuiInputTextFlags_CharsScientific))
+    if (flags & (ImGuiInputTextFlags_CharsDecimal | ImGuiInputTextFlags_CharsHexadecimal | ImGuiInputTextFlags_CharsUppercase | ImGuiInputTextFlags_CharsNoBlank | ImGuiInputTextFlags_CharsScientific | ImGuiInputTextFlags_AlphaNumerical))
     {
         if (flags & ImGuiInputTextFlags_CharsDecimal)
             if (!(c >= '0' && c <= '9') && (c != '.') && (c != '-') && (c != '+') && (c != '*') && (c != '/'))
@@ -10706,6 +10706,10 @@ static bool InputTextFilterCharacter(unsigned int* p_char, ImGuiInputTextFlags f
         if (flags & ImGuiInputTextFlags_CharsUppercase)
             if (c >= 'a' && c <= 'z')
                 *p_char = (c += (unsigned int)('A'-'a'));
+
+        if (flags & ImGuiInputTextFlags_AlphaNumerical)
+            if (!(c >= '0' && c <= '9') && !(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z'))
+                return false;
 
         if (flags & ImGuiInputTextFlags_CharsNoBlank)
             if (ImCharIsBlankW(c))
