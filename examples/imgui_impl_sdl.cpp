@@ -143,6 +143,7 @@ static bool    ImGui_ImplSDL2_Init(SDL_Window* window)
     io.KeyMap[ImGuiKey_X] = SDL_SCANCODE_X;
     io.KeyMap[ImGuiKey_Y] = SDL_SCANCODE_Y;
     io.KeyMap[ImGuiKey_Z] = SDL_SCANCODE_Z;
+    io.KeyMap[ImGuiKey_NumEnter] = SDL_SCANCODE_KP_ENTER;
 
     io.SetClipboardTextFn = ImGui_ImplSDL2_SetClipboardText;
     io.GetClipboardTextFn = ImGui_ImplSDL2_GetClipboardText;
