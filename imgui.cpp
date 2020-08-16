@@ -11602,7 +11602,7 @@ void ImGui::DestroyPlatformWindows()
 // - ImGuiDockContext
 //-----------------------------------------------------------------------------
 
-static float IMGUI_DOCK_SPLITTER_SIZE = 2.0f;
+static float IMGUI_DOCK_SPLITTER_SIZE = 6.0f;
 
 enum ImGuiDockRequestType
 {
